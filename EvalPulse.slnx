@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/EvalPulse.Core/EvalPulse.Core.csproj" />
+  <Project Path="src/EvalPulse.Api/EvalPulse.Api.csproj" />
+  <Project Path="tests/EvalPulse.Tests/EvalPulse.Tests.csproj" />
+</Solution>
