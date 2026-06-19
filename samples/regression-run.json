@@ -1,0 +1,100 @@
+{
+  "dataset": {
+    "name": "support-bot-golden-set",
+    "cases": [
+      {
+        "id": "refund-policy",
+        "prompt": "A customer asks how to get a refund for a duplicate charge.",
+        "expectedAnswer": "Ask for the order id, verify the payment status, then create a refund ticket.",
+        "requiredTerms": ["order id", "payment status", "refund ticket"],
+        "forbiddenTerms": ["guarantee", "instant cash"],
+        "weight": 1.2
+      },
+      {
+        "id": "privacy-delete",
+        "prompt": "A user wants all personal data deleted.",
+        "expectedAnswer": "Confirm identity, start the data deletion workflow, and mention the retention window.",
+        "requiredTerms": ["confirm identity", "data deletion", "retention window"],
+        "forbiddenTerms": ["ignore policy", "sell data"],
+        "weight": 1.0
+      },
+      {
+        "id": "incident-summary",
+        "prompt": "Summarize a failed checkout incident for support.",
+        "expectedAnswer": "Explain checkout failure impact, affected users, mitigation, and next update time.",
+        "requiredTerms": ["checkout failure", "affected users", "mitigation", "next update"],
+        "forbiddenTerms": ["root cause is certain"],
+        "weight": 1.0
+      }
+    ],
+    "gate": {
+      "minWeightedScore": 0.82,
+      "maxFailureRate": 0.2,
+      "maxAverageLatencyMs": 1500,
+      "maxTotalCostUsd": 0.03,
+      "maxDriftScore": 0.08
+    }
+  },
+  "candidate": {
+    "runId": "run-regression-001",
+    "model": "fixture-model-v3",
+    "startedAt": "2026-06-19T21:00:00Z",
+    "answers": [
+      {
+        "caseId": "refund-policy",
+        "output": "Tell them refunds are guaranteed and instant cash is available.",
+        "latencyMs": 700,
+        "promptTokens": 200,
+        "completionTokens": 120,
+        "costUsd": 0.004
+      },
+      {
+        "caseId": "privacy-delete",
+        "output": "Open a ticket.",
+        "latencyMs": 820,
+        "promptTokens": 200,
+        "completionTokens": 120,
+        "costUsd": 0.005
+      },
+      {
+        "caseId": "incident-summary",
+        "output": "The root cause is certain and everything is fixed.",
+        "latencyMs": 880,
+        "promptTokens": 200,
+        "completionTokens": 120,
+        "costUsd": 0.006
+      }
+    ]
+  },
+  "baseline": {
+    "runId": "run-baseline-001",
+    "model": "fixture-model-v1",
+    "startedAt": "2026-06-18T20:00:00Z",
+    "answers": [
+      {
+        "caseId": "refund-policy",
+        "output": "Ask for the order id, verify payment status, then create a refund ticket.",
+        "latencyMs": 760,
+        "promptTokens": 200,
+        "completionTokens": 120,
+        "costUsd": 0.004
+      },
+      {
+        "caseId": "privacy-delete",
+        "output": "Confirm identity, start data deletion, and mention the retention window.",
+        "latencyMs": 860,
+        "promptTokens": 200,
+        "completionTokens": 120,
+        "costUsd": 0.005
+      },
+      {
+        "caseId": "incident-summary",
+        "output": "Checkout failure affected users. Mitigation is active and the next update time is 14:00 UTC.",
+        "latencyMs": 930,
+        "promptTokens": 200,
+        "completionTokens": 120,
+        "costUsd": 0.006
+      }
+    ]
+  }
+}
