@@ -1,0 +1,20 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build
+        run: dotnet build EvalPulse.slnx --configuration Release
+      - name: Run tests
+        run: dotnet run --project tests/EvalPulse.Tests --configuration Release --no-build
+      - name: Publish API
+        run: dotnet publish src/EvalPulse.Api/EvalPulse.Api.csproj --configuration Release --no-build --output out
